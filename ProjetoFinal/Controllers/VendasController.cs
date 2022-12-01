@@ -109,7 +109,7 @@ namespace ProjetoFinal.Controllers
             else if(produto.EstoqueAtual <= qtd)
 				SetErroMessagem("Produto sem estoque disponível");
 			else
-                AddProdutoSession(produto.Id);
+                AddProdutoSession(produto.Id, qtd);
             return RedirectToAction(nameof(Create));
         }
 
