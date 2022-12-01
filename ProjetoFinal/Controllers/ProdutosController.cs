@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetoFinal.Models;
 using ProjetoFinal.Repositorio;
 
 namespace ProjetoFinal.Controllers
 {
+    [Authorize]
     public class ProdutosController : BaseController
     {
         private readonly ProdutoRepositorio _produtoRepositorio;

@@ -27,6 +27,7 @@ namespace ProjetoFinal.Controllers
         }
 
         // GET: Vendas
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -100,12 +101,14 @@ namespace ProjetoFinal.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduto(string codigo)
+        public IActionResult AddProduto(string codigo, int qtd = 1)
         {
             var produto = _produtoRepositorio.Buscar(codigo);
             if (produto == null)
                 SetErroMessagem("Produto não encontrado");
-            else
+            else if(produto.EstoqueAtual <= qtd)
+				SetErroMessagem("Produto sem estoque disponível");
+			else
                 AddProdutoSession(produto.Id);
             return RedirectToAction(nameof(Create));
         }

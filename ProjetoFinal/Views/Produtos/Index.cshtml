@@ -43,7 +43,8 @@
                 @Html.DisplayFor(modelItem => item.EstoqueAtual)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-controller="Estoque" asp-action="Index" asp-route-id="@item.Id">Estoque</a>
             </td>
         </tr>
 }

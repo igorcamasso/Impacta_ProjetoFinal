@@ -15,11 +15,8 @@ namespace ProjetoFinal.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Create", "Vendas");
             return View();
         }
 

@@ -7,9 +7,13 @@ namespace ProjetoFinal.Repositorio
 {
     public class EstoqueRepositorio : RepositorioBase<Estoque, int>
     {
-        public EstoqueRepositorio(ApplicationDbContext context) : base(context)
+		private readonly ApplicationDbContext context;
+		private readonly ProdutoRepositorio _produtoRepositorio;
+
+		public EstoqueRepositorio(ApplicationDbContext context) : base(context)
         {
-        }
+			this.context = context;
+		}
 
         public new void Adicionar(Estoque estoque)
         {
@@ -50,7 +54,7 @@ namespace ProjetoFinal.Repositorio
         public void EntradaEstoque(int produtoId, EEstoqueTipoLancamento tipo, float QtdEntrada)
         {
             var estoqueAtual = EstoqueAtual(produtoId);
-            base.Adicionar(new Estoque
+            var estoque = new Estoque
             {
                 Operacao = EEstoqueOperacao.Entrada,
                 TipoLancamento = tipo,
@@ -58,13 +62,15 @@ namespace ProjetoFinal.Repositorio
                 SaldoAnterior = estoqueAtual,
                 SaldoNovo = estoqueAtual + QtdEntrada,
                 ProdutoId = produtoId,
-            });
-        }
+            };
+			base.Adicionar(estoque);
+			AtualizaEstoqueProduto(produtoId, estoque.SaldoNovo);
+		}
 
         public void SaidaEstoque(int produtoId, EEstoqueTipoLancamento tipo, float QtdSaida, int? VendaId = null)
         {
             var estoqueAtual = EstoqueAtual(produtoId);
-            base.Adicionar(new Estoque
+            var estoque = new Estoque
             {
                 Operacao = EEstoqueOperacao.Saida,
                 TipoLancamento = tipo,
@@ -73,7 +79,19 @@ namespace ProjetoFinal.Repositorio
                 SaldoNovo = estoqueAtual - QtdSaida,
                 ProdutoId = produtoId,
                 VendaId = VendaId
-            });
-        }
+            };
+			base.Adicionar(estoque);
+            AtualizaEstoqueProduto(produtoId, estoque.SaldoNovo);
+		}
+
+        private void AtualizaEstoqueProduto(int produtoId, float estoque)
+        {
+            var produto = context.Produto.Find(produtoId);
+            if(produto != null)
+            {
+                produto.EstoqueAtual = estoque;
+                context.SaveChanges();
+			}
+		}
     }
 }

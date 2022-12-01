@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoFinal.Data;
 using ProjetoFinal.Models;
+using ProjetoFinal.Repositorio;
 
 namespace ProjetoFinal.Controllers
 {
     public class EstoqueController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ProdutoRepositorio produtoRepositorio;
 
-        public EstoqueController(ApplicationDbContext context)
+        public EstoqueController(ApplicationDbContext context, ProdutoRepositorio produtoRepositorio)
         {
             _context = context;
+            this.produtoRepositorio = produtoRepositorio;
         }
 
         // GET: Estoque
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var applicationDbContext = _context.Estoque.Include(e => e.Venda);
+            var produto = produtoRepositorio.Buscar(id);
+            ViewBag.Produto = produto;
+            var applicationDbContext = _context.Estoque.Where(a=>a.ProdutoId == id).Include(e => e.Venda);
             return View(await applicationDbContext.ToListAsync());
         }
 

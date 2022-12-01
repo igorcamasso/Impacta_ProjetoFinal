@@ -1,4 +1,5 @@
 ﻿using ProjetoFinal.ENum;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjetoFinal.Models
 {
