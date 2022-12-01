@@ -1,62 +1,66 @@
 ﻿@model IEnumerable<ProjetoFinal.Models.Estoque>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Auditoria de Estoque";
 }
 
-<h1>Estoque do produto '@ViewBag.Produto.Nome' </h1>
+<h1>Histórico do estoque do produto '@ViewBag.Produto.Nome' </h1>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Operacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoLancamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SaldoAnterior)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SaldoNovo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Venda)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.OrderByDescending(a=>a.Data)) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Operacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoLancamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SaldoAnterior)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SaldoNovo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Venda.Id)
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Operacao)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.TipoLancamento)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Data)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Quantidade)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.SaldoAnterior)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.SaldoNovo)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Venda)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.OrderByDescending(a => a.Data))
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Operacao)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.TipoLancamento)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Data)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Quantidade)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.SaldoAnterior)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.SaldoNovo)
+				</td>
+				<td>
+					@if (item.Venda != null)
+					{
+						<a asp-action="Details" asp-controller="Vendas" asp-route-id="@item.Venda.Id">Visualizar Venda</a>
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

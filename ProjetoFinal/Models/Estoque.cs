@@ -1,4 +1,6 @@
 ﻿using ProjetoFinal.ENum;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoFinal.Models
@@ -14,16 +16,21 @@ namespace ProjetoFinal.Models
 
         public int ProdutoId { get; set; }
 
+        [DisplayName("Operação")]
         public EEstoqueOperacao Operacao { get; set; }
 
+        [DisplayName("Tipo do Lançamento")]
         public EEstoqueTipoLancamento TipoLancamento { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         public DateTimeOffset Data { get; set; }
 
         public float Quantidade { get; set; }
 
+        [DisplayName("Saldo Anterior")]
         public float SaldoAnterior { get; set; }
 
+        [DisplayName("Saldo")]
         public float SaldoNovo { get; set; }
 
 

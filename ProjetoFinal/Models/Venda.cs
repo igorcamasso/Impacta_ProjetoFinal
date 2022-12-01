@@ -1,4 +1,5 @@
 ﻿using ProjetoFinal.ENum;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjetoFinal.Models
@@ -18,6 +19,7 @@ namespace ProjetoFinal.Models
         /// <summary>
         /// Valor total da soma dos produtos.
         /// </summary>
+        [DisplayName("Valor Dos Produtos")]
         public float ValorTotalProdutos
         {
             get => _valorTotalProdutos;
@@ -31,6 +33,7 @@ namespace ProjetoFinal.Models
         /// <summary>
         /// Valor de desconto aplicado a venda.
         /// </summary>
+        [DisplayName("Valor do Desconto")]
         public float ValorDesconto { get => _valorDesconto; 
             set { 
                 _valorDesconto = value;
@@ -41,6 +44,7 @@ namespace ProjetoFinal.Models
         /// <summary>
         /// Valor total da venda
         /// </summary>
+        [DisplayName("Valor Total da Venda")]
         public float ValorTotal
         {
             get
@@ -54,6 +58,7 @@ namespace ProjetoFinal.Models
         /// <summary>
         /// Forma de pagamento da venda.
         /// </summary>
+        [DisplayName("Forma de Pagamento")]
         public EFormaPagamento FormaPagamento { get; set; }
 
         /// <summary>
