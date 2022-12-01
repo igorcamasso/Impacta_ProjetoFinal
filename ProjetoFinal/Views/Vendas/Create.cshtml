@@ -1,0 +1,90 @@
+﻿@model List<ProjetoFinal.Controllers.VendasController.ProdutoQtd>
+
+@{
+	ViewData["Title"] = "Venda";
+}
+
+<partial name="_alerta" />
+
+<h4>Venda</h4>
+<hr />
+<div class="row">
+
+	<div class="col-md d-flex flex-row">
+		<form asp-action="AddProduto" method="post">
+			<div class="form-group">
+				<label for="codigo" class="control-label">Código do Produto</label>
+				<input name="codigo" class="form-control" autofocus" />
+				<input type="submit" value="Adicionar" class="btn btn-primary mt-2" />
+			</div>
+		</form>
+	</div>
+
+	@if (Model != null && Model.Count > 0)
+	{
+		<p>
+			<a asp-action="FormaPagamento" class="btn btn-success mt-3">Forma de pagamento</a>
+		</p>
+
+		<hr class="mt-2" />
+		<h6>Produtos adicionados</h6>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Código
+					</th>
+					<th>
+						Nome
+					</th>
+					<th>
+						Qtd
+					</th>
+					<th>
+						Preço
+					</th>
+					<th>
+						Valor Total
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@item.ProdutoInfo?.Ean
+						</td>
+						<td>
+							@item.ProdutoInfo?.Nome
+						</td>
+						<td>
+							@item.Qtd
+						</td>
+						<td>
+							@item.ProdutoInfo?.Preco
+						</td>
+						<td>
+							@(item.Qtd * item.ProdutoInfo?.Preco)
+						</td>
+						<td>
+							<form asp-action="RemoverProduto" method="post">
+								<input type="hidden" name="produtoId" value="@item.Id" class="form-control" />
+								<input type="submit" value="Remover" class="btn btn-danger" />
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
